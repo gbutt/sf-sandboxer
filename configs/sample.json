@@ -1,0 +1,107 @@
+{
+    "src" : {
+        "username": "donald@trump.biz",
+        "loginUrl": "https://login.salesforce.com"
+    },
+    "dest" : {
+        "username": "donald@trump.biz.fired",
+        "loginUrl": "https://test.salesforce.com"
+    },
+    "variables": {
+        "MY_HOMIES": "'Halliburton','Comcast','KFC','Fox'"
+    },
+    "preLoad" : {
+        "THE_DONALD": "SELECT Id FROM User WHERE Username = 'donald@trump.biz'"
+    },
+    "loaders": [
+        {   "type": "Account",
+            "enabled": true,
+            "operation": "upsert",
+            "options": {
+                "extIdField": "Name"
+            },
+            "filter": "Name IN ($MY_HOMIES)",
+            "fields": [
+                "Name",
+                "AccountNumber",
+                "Site",
+                "AccountSource",
+                "AnnualRevenue",
+                "BillingStreet",
+                "BillingCity",
+                "BillingState",
+                "BillingPostalCode",
+                "BillingCountry",
+                "Jigsaw",
+                "Description",
+                "NumberOfEmployees",
+                "Fax",
+                "Industry",
+                "Ownership",
+                "Parent",
+                "Phone",
+                "Rating",
+                "ShippingStreet",
+                "ShippingCity",
+                "ShippingState",
+                "ShippingPostalCode",
+                "ShippingCountry",
+                "Sic",
+                "SicDesc",
+                "TickerSymbol",
+                "Type",
+                "Website"
+            ],
+            "mappings": [{
+                "srcValue": "$THE_DONALD",
+                "destField": "OwnerId"
+            }]
+        },
+        {   "type": "Contact",
+            "enabled": true,
+            "operation": "upsert",
+            "options": {
+                "extIdField": "Email"
+            },
+            "filter": "Account.Name IN ($MY_HOMIES)",
+            "fields": [
+                "Account.Name",
+                "AssistantName",
+                "AssistantPhone",
+                "Birthdate",
+                "Department",
+                "Description",
+                "DoNotCall",
+                "Email",
+                "HasOptedOutOfEmail",
+                "Fax",
+                "HasOptedOutOfFax",
+                "HomePhone",
+                "LeadSource",
+                "MailingStreet",
+                "MailingCity",
+                "MailingState",
+                "MailingPostalCode",
+                "MailingCountry",
+                "MobilePhone",
+                "Salutation",
+                "FirstName",
+                "LastName",
+                "OtherStreet",
+                "OtherCity",
+                "OtherState",
+                "OtherPostalCode",
+                "OtherCountry",
+                "OtherPhone",
+                "Phone",
+                "ReportsTo",
+                "Title"
+            ],
+            "mappings": [{
+                "srcValue": "Account.Name",
+                "destField": "Description",
+                "removeSrcField": false
+            }]
+        }
+    ]
+}
