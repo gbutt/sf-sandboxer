@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Greg Butt",
   "license": "MIT",
+  "bin": {
+    "sandboxer": "./bin/sandboxer"
+  },
   "dependencies": {
     "commander": "^2.9.0",
     "jsforce": "^1.7.1",

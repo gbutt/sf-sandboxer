@@ -70,7 +70,6 @@
                 "AssistantPhone",
                 "Birthdate",
                 "Department",
-                "Description",
                 "DoNotCall",
                 "Email",
                 "HasOptedOutOfEmail",
@@ -98,7 +97,7 @@
                 "Title"
             ],
             "mappings": [{
-                "srcValue": "Account.Name",
+                "srcField": "Account.Name",
                 "destField": "Description",
                 "removeSrcField": false
             }]
