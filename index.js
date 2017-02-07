@@ -52,15 +52,21 @@ function run() {
 }
 
 function createConnections(config) {
-  var srcConn = new jsforce.Connection({loginUrl: config.src.loginUrl});
-  var destConn = new jsforce.Connection({loginUrl: config.dest.loginUrl});
+  var _srcConn = new jsforce.Connection({loginUrl: config.src.loginUrl});
+  var _destConn = new jsforce.Connection({loginUrl: config.dest.loginUrl});
   return Promise.all([
-    srcConn.login(config.src.username, config.src.password), 
-    destConn.login(config.dest.username, config.dest.password)
+    _srcConn.login(config.src.username, config.src.password), 
+    _destConn.login(config.dest.username, config.dest.password)
   ]).then(function(){
+
     return {
-      srcConn : srcConn,
-      destConn : destConn
+      srcConn : {
+        // only expose query api for source connection
+        query: function(soql, options, callback) {
+          return _srcConn.query(soql, options, callback);
+        }
+      }, 
+      destConn : _destConn
     };
   });
 }
